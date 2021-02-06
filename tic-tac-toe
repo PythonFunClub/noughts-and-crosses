@@ -118,5 +118,3 @@ def turns():
 			break
 
 turns()
-
-#Joe's Dodgy Branch rules! 
