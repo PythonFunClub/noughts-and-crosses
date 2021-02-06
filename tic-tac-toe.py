@@ -4,9 +4,9 @@ roundCount = 0
 randomSquares =[]
 board = [" "," "," "," "," "," "," "," "," "]
 score = {
-	" ": 1,
-	"X": 2,
-	"O": 5
+	" ": 0,
+	"X": -1,
+	"O": 1
 }
 
 # print the square number for guidance
@@ -89,9 +89,9 @@ def checkWinner():
 	for j in range(2,8,2):
 		totalDiagonalScoreTR += score.get(board[j], 0)
 
-	if totalRowScore == 6 or totalDiagonalScoreTL == 6 or totalDiagonalScoreTR == 6 or totalColScore == 6:
+	if totalRowScore == -3 or totalDiagonalScoreTL == -3 or totalDiagonalScoreTR == -3 or totalColScore == -3:
 		return "me - the computer"
-	if totalRowScore == 15 or totalDiagonalScoreTL == 15 or totalDiagonalScoreTR == 15 or totalColScore ==15:
+	if totalRowScore == 3 or totalDiagonalScoreTL == 3 or totalDiagonalScoreTR == 3 or totalColScore == 3:
 		printBoard()
 		return "you - congratulations"
 
