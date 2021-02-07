@@ -76,7 +76,6 @@ def checkWinner():
 		totalColScore = 0
 		for x in range(a,b,3): 
 			totalColScore += score.get(board[x], 0)
-			print('totalColScore ', totalColScore)
 		if totalColScore == 6 or totalColScore == 15:
 			break
 
@@ -96,26 +95,73 @@ def checkWinner():
 		return "you - congratulations"
 
 
-def turns():
+def turns(firstGo):
+	if firstGo == "human":
+		humanTurn()
+		if checkWinner() is not None:
+			print('The winner is ', checkWinner())
+
 	for x in range(8):
-		if " " in board:
-			humanTurn()
-			if checkWinner() is not None:
-				print('The winner is ', checkWinner())
-				break
+
 		if " " in board:
 			compTurn()
 			printBoard()
 			if checkWinner() is not None:
 				print('The winner is ', checkWinner())
 				break
+
+		if " " in board:
+			humanTurn()
+			if checkWinner() is not None:
+				print('The winner is ', checkWinner())	
+				break		
 		else:
 			printBoard()
 # check to see if the last go wins the game
 			if checkWinner() is not None:
-				print('The winner is ', checkWinner())
+				print("The winner is ", checkWinner())
 				break
 			print("It's a draw")
 			break
 
-turns()
+def humanGo():
+	humanTurn()
+	if checkWinner() is not None:
+		print('The winner is ', checkWinner())
+
+def computerGo():
+	compTurn()
+	printBoard()
+	if checkWinner() is not None:
+		print('The winner is ', checkWinner())
+
+
+def coinToss():
+	headsOrTails = input("Heads or tails (h or t) ")
+	if headsOrTails == "h":
+		coinCall = "heads"
+	else:
+		coinCall = "tails"
+
+	ran = random.randint(0,1)
+	if ran == 0:
+		coinFace = "heads"
+	else:
+		coinFace = "tails" 
+
+	print (coinFace)
+
+	if coinCall == coinFace:
+		firstGo = "human"
+		print ("You won the Toss, you go first")
+
+	else:
+		firstGo = "computer"
+		print ("You lost the Toss, I go first")
+
+
+	return firstGo
+
+
+coinT = coinToss ()
+turns(coinT)
