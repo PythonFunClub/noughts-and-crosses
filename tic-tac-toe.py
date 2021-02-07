@@ -65,7 +65,7 @@ def checkWinner():
 		totalRowScore = 0
 		for x in range(a,b): 
 			totalRowScore += score.get(board[x], 0)
-		if totalRowScore == 6 or totalRowScore == 15:
+		if totalRowScore == 3 or totalRowScore == -3:
 			break
 	
 	# check each column 
@@ -76,7 +76,7 @@ def checkWinner():
 		totalColScore = 0
 		for x in range(a,b,3): 
 			totalColScore += score.get(board[x], 0)
-		if totalColScore == 6 or totalColScore == 15:
+		if totalColScore == 3 or totalColScore == -3:
 			break
 
 	# check top left to bottom right 
@@ -124,17 +124,6 @@ def turns(firstGo):
 			print("It's a draw")
 			break
 
-def humanGo():
-	humanTurn()
-	if checkWinner() is not None:
-		print('The winner is ', checkWinner())
-
-def computerGo():
-	compTurn()
-	printBoard()
-	if checkWinner() is not None:
-		print('The winner is ', checkWinner())
-
 
 def coinToss():
 	headsOrTails = input("Heads or tails (h or t) ")
@@ -148,8 +137,6 @@ def coinToss():
 		coinFace = "heads"
 	else:
 		coinFace = "tails" 
-
-	print (coinFace)
 
 	if coinCall == coinFace:
 		firstGo = "human"
