@@ -1,5 +1,6 @@
 
 import random
+import sys
 roundCount = 0
 randomSquares =[]
 board = [" "," "," "," "," "," "," "," "," "]
@@ -9,14 +10,15 @@ score = {
 	"O": 1
 }
 
+def printGuidance():
 # print the square number for guidance
-print("-------------------")
-print("| ",1," | ",2," | ",3," | ")
-print("-------------------")
-print("| ",4," | ",5," | ",6," | ")
-print("-------------------")
-print("| ",7," | ",8," | ",9," | ")
-print("-------------------")
+	print("-------------------")
+	print("| ",1," | ",2," | ",3," | ")
+	print("-------------------")
+	print("| ",4," | ",5," | ",6," | ")
+	print("-------------------")
+	print("| ",7," | ",8," | ",9," | ")
+	print("-------------------")
 
 # after each round print the board
 def printBoard():
@@ -34,19 +36,20 @@ def humanTurn():
 	# ask for a square number
 	while True:
 		try:
-			i = int(input("Select a square (1-9) ")) - 1
+			i = int(input("Select a square (1-9) or 0 to quit ")) - 1
+			if i == -1:
+				sys.exit()
 
 			# check the square is empty if not put an O in it
 			if board[i] == " ":
 				board[i] = "O"
-				print("human square",i)
 				# end of human go so break
 				break
 			else:
 				# if the square is not empty prompt for another squaure
 				print("That square has been taken, please try another")
 				continue
-		except:
+		except Exception as e:
 			print("Please enter a valid integer")
 
 def compTurn():
@@ -98,10 +101,8 @@ def checkWinner():
 def turns(firstGo):
 	if firstGo == "human":
 		humanTurn()
-		if checkWinner() is not None:
-			print('The winner is ', checkWinner())
 
-	for x in range(8):
+	while checkWinner() is None:
 
 		if " " in board:
 			compTurn()
@@ -110,7 +111,6 @@ def turns(firstGo):
 				print('The winner is ', checkWinner())
 				break
 
-		if " " in board:
 			humanTurn()
 			if checkWinner() is not None:
 				print('The winner is ', checkWinner())	
@@ -124,19 +124,29 @@ def turns(firstGo):
 			print("It's a draw")
 			break
 
-
 def coinToss():
-	headsOrTails = input("Heads or tails (h or t) ")
-	if headsOrTails == "h":
-		coinCall = "heads"
-	else:
-		coinCall = "tails"
+	while True:
+		headsOrTails = input("Heads or tails (h or t) ")
+
+		if headsOrTails == "h":
+			coinCall = "heads"
+			break
+		elif headsOrTails == "t":
+			coinCall = "tails"
+			break
+		else:
+			print("Invalid input")
 
 	ran = random.randint(0,1)
 	if ran == 0:
 		coinFace = "heads"
-	else:
+	elif ran == 1:
 		coinFace = "tails" 
+	else:
+		print("something went wrong")
+
+	print("It's " , coinFace)
+
 
 	if coinCall == coinFace:
 		firstGo = "human"
@@ -144,8 +154,9 @@ def coinToss():
 
 	else:
 		firstGo = "computer"
-		print ("You lost the Toss, I go first")
+		print ("You lost the Toss, I'm going first")
 
+	printGuidance()
 
 	return firstGo
 
